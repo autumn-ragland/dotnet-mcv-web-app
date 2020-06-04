@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using product_web_app.Models;
 
 namespace product_web_app.Controllers
 {
+    [Authorize]
     public class ProductsController : Controller
     {
         private readonly ProductWebAppDbContext _context;
@@ -44,6 +46,7 @@ namespace product_web_app.Controllers
         }
 
         // GET: Products/Create
+        [Authorize(Roles = "admin")]
         public IActionResult Create()
         {
             return View();
@@ -135,6 +138,7 @@ namespace product_web_app.Controllers
         }
 
         // POST: Products/Delete/5
+        [Authorize(Roles = "admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
